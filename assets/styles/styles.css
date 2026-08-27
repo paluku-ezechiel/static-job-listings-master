@@ -1,4 +1,4 @@
-/* *,
+*,
 *::before,
 *::after {
   padding: 0;
@@ -129,4 +129,4 @@ header {
   background-color: var(--Green_50);
   color: var(--Green_400);
   cursor: pointer;
-} */
+}
