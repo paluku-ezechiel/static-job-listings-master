@@ -1,0 +1,132 @@
+/* *,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+  --Green_400: hsl(180, 29%, 50%);
+  --Green_50: hsl(180, 52%, 96%);
+  --Gray_400: hsl(180, 8%, 52%);
+  --Green_900: hsl(180, 14%, 20%);
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "League Spartan", sans-serif;
+  color: #333;
+  height: 100vh;
+  background-color: var(--Green_50);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 2rem;
+}
+
+img {
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+header {
+  background-image: url("/images/bg-header-desktop.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: var(--Gray_400);
+  height: 10rem;
+  min-height: auto;
+}
+
+.static-job-container {
+  background-color: white;
+  width: 1100px;
+  margin: 4rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  box-shadow: 0 2px 9px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid var(--Green_400);
+  border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.static-job-items {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.static-job-elements {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.static-job-paragraphe {
+  display: flex;
+  gap: 2rem;
+}
+
+.static-job-buttons {
+  display: flex;
+  gap: 1rem;
+}
+.photosnap {
+  background-color: 0;
+  border: none;
+  outline: none;
+  color: var(--Green_400);
+  font-weight: 700;
+}
+
+.para-new {
+  background-color: var(--Green_400);
+  padding: 0.4rem 0.8rem;
+  border-radius: 3rem;
+  color: white;
+}
+
+.par-feature {
+  background-color: var(--Green_900);
+  padding: 0.4rem 0.8rem;
+  border-radius: 3rem;
+  color: white;
+}
+
+.job-text {
+  color: var(--Green_900);
+  font-weight: 700;
+}
+
+.static-job-paragraphe p {
+  color: var(--Gray_400);
+}
+
+.bouttons-class {
+  display: flex;
+  gap: 1rem;
+}
+
+.bouttons-class button {
+  border: 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  background-color: var(--Green_50);
+  color: var(--Green_400);
+  cursor: pointer;
+} */
