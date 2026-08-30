@@ -153,6 +153,12 @@ header {
   border-radius: 1rem;
 }
 
+.active-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .active-filter-item {
   display: flex;
   align-items: center;

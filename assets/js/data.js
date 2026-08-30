@@ -29,7 +29,10 @@ const renderActiveFilters = () => {
     btnDelete.setAttribute("aria-label", "Remove filter");
     btnDelete.classList.add("btn-delete");
 
-    btnDelete.addEventListener("click", () => {});
+    btnDelete.addEventListener("click", () => {
+      activerFilters = activerFilters.filter((item) => item !== filtre);
+      executerLeFiltrage();
+    });
 
     const iconImageFont = document.createElement("i");
     iconImageFont.classList.add("fa-solid", "fa-xmark");
@@ -43,12 +46,37 @@ const renderActiveFilters = () => {
     activeFilterContainer.appendChild(filterItem);
     // filterBar.append(activeFilterContainer, btnClearBlock);
   });
-
   const btnClear = document.querySelector(".btn-clear");
-  console.log(btnClear);
+
+  if (btnClear) {
+    btnClear.addEventListener("click", () => {
+      activerFilters = [];
+      executerLeFiltrage();
+    });
+  }
 };
 
-renderActiveFilters();
+const executerLeFiltrage = () => {
+  if (activerFilters.length === 0) {
+    createJobListingElement(jobArr);
+    return;
+  }
+
+  const jobsFiltres = jobArr.filter((listing) => {
+    const competencesJob = [
+      listing.role,
+      listing.level,
+      ...(listing.languages || []),
+      ...(listing.tools || []),
+    ];
+    return activerFilters.every((unFiltre) =>
+      competencesJob.includes(unFiltre)
+    );
+  });
+
+  createJobListingElement(jobsFiltres);
+  renderActiveFilters();
+};
 
 const createJobListingNodes = (listing) => {
   const staticJobContainer = document.createElement("div");
@@ -193,9 +221,9 @@ const createJobListingNodes = (listing) => {
 };
 
 const createJobListingElement = (jobListing) => {
-  jobArr = Array.isArray(jobListing) ? jobListing : [jobListing];
+  const listeATraiter = Array.isArray(jobListing) ? jobListing : [jobListing];
 
-  const texteNodes = jobArr.map((listing) => {
+  const texteNodes = listeATraiter.map((listing) => {
     return createJobListingNodes(listing);
   });
   if (!staticJobContents) return;
@@ -208,8 +236,8 @@ const fetchAll = async () => {
     if (!response.ok) {
       throw new Error(`Erreur HTTP : ${response.status}`);
     }
-    const jobListing = await response.json();
-    createJobListingElement(jobListing);
+    jobArr = await response.json();
+    createJobListingElement(jobArr);
   } catch (error) {
     console.log("Erreur :", error);
   }
