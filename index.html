@@ -19,6 +19,11 @@
       rel="stylesheet"
     />
 
+    <script
+      src="https://kit.fontawesome.com/6b27567aa1.js"
+      crossorigin="anonymous"
+    ></script>
+
     <title>Frontend Mentor | Job Listings</title>
 
     <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
@@ -35,38 +40,54 @@
   <body>
     <div class="container-fluid">
       <header></header>
-      <div class="static-job-container">
-        <div class="static-job-items">
-          <div class="static-job-image">
-            <img src="./images/photosnap.svg" alt="image photo snap" />
-          </div>
-          <div class="static-job-elements">
-            <div class="static-job-buttons">
-              <p class="photosnap">Photosnap</p>
-              <p class="para-new">New!</p>
-              <p class="par-feature">Featured</p>
-            </div>
-            <div class="static-job-text">
-              <p class="job-text">Senior Frontend Developer</p>
-            </div>
-            <div class="static-job-paragraphe">
-              <p>1d ago</p>
-              <p>.</p>
-              <p>Full Time</p>
-              <p>.</p>
-              <p>USA only</p>
-            </div>
-          </div>
+      <div class="filter-bar">
+        <div class="active-filter-container">
+          <!-- <div class="active-filter-item">
+            <p>Frontend</p>
+            <button type="button" aria-label="Remove filter" class="btn-delete">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </div> -->
         </div>
-        <div class="static-full-buttons">
-          <div class="bouttons-class">
-            <button>Frontend</button>
-            <button>Senior</button>
-            <button>HTML</button>
-            <button>CSS</button>
-            <button>JavaScript</button>
-          </div>
+        <div class="btn-clear-block">
+          <button type="button" class="btn-clear">Clear</button>
         </div>
+      </div>
+
+      <div class="static-job-contents">
+        <!-- <div class="static-job-container">
+          <div class="static-job-items">
+            <div class="static-job-image">
+              <img src="./images/photosnap.svg" alt="image photo snap" />
+            </div>
+            <div class="static-job-elements">
+              <div class="static-job-buttons">
+                <p class="photosnap">Photosnap</p>
+                <p class="para-new">New!</p>
+                <p class="par-feature">Featured</p>
+              </div>
+              <div class="static-job-text">
+                <p class="job-text">Senior Frontend Developer</p>
+              </div>
+              <div class="static-job-paragraphe">
+                <p>1d ago</p>
+                <p>.</p>
+                <p>Full Time</p>
+                <p>.</p>
+                <p>USA only</p>
+              </div>
+            </div>
+          </div>
+          <div class="static-full-buttons">
+            <div class="bouttons-class">
+              <button>Frontend</button>
+              <button>Senior</button>
+              <button>HTML</button>
+              <button>CSS</button>
+              <button>JavaScript</button>
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
     <footer class="attribution">

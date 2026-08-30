@@ -53,15 +53,23 @@ header {
 
 .static-job-container {
   background-color: white;
-  width: 1100px;
-  margin: 4rem auto;
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  box-shadow: 0 2px 9px rgba(0, 0, 0, 0.05);
-  border-left: 3px solid var(--Green_400);
-  border-radius: 0.4rem 0 0 0.4rem;
+  box-shadow: 0 10px 15px -3px rgba(91, 164, 164, 0.1),
+    0 4px 6px -4px rgba(91, 164, 164, 0.1);
+  /* border-left: 3px solid var(--Green_400); */
+  border-left: 5px solid transparent;
+  transition: transform 0.2s ease;
+  border-radius: 0.4rem;
+}
+
+.static-job-container.featured-border {
+  border-left: 5px solid var(--Green_400);
 }
 
 .static-job-items {
@@ -73,7 +81,8 @@ header {
 .static-job-elements {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .static-job-paragraphe {
@@ -129,4 +138,65 @@ header {
   background-color: var(--Green_50);
   color: var(--Green_400);
   cursor: pointer;
+}
+
+/* Filter */
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  width: calc(100% - 2rem);
+  max-width: 1100px;
+  margin: -3rem auto 2rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.active-filter-item {
+  display: flex;
+  align-items: center;
+}
+
+.active-filter-item p {
+  background-color: var(--Green_50);
+  padding: 0.8rem;
+  font-weight: 700;
+  color: var(--Green_400);
+  border-radius: 0.5rem 0 0rem 0.5rem;
+}
+
+.active-filter-item .btn-delete {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.8rem;
+  background-color: var(--Green_900);
+}
+
+.active-filter-item .btn-delete i {
+  color: white;
+  font-size: 1.5rem;
+  box-sizing: border-box;
+  font-weight: 700;
+}
+
+.btn-clear {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  color: var(--Green_400);
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-clear:hover {
+  color: var(--Green_900);
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
 }
