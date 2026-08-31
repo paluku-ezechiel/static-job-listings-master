@@ -95,6 +95,22 @@ const displayJobListing = (listing) => {
     staticJobParagraphe
   );
   bouttonsClass.append(btnFrontend, btnLevel);
+
+  if (listing.languages && listing.languages.length > 0) {
+    listing.languages.forEach((lang) => {
+      const btnLanguage = document.createElement("button");
+      btnLanguage.textContent = `${lang}`;
+      bouttonsClass.appendChild(btnLanguage);
+    });
+  }
+
+  if (listing.tools && listing.tools.length > 0) {
+    listing.tools.forEach((tool) => {
+      const btnTool = document.createElement("button");
+      btnTool.textContent = `${tool}`;
+      bouttonsClass.appendChild(btnTool);
+    });
+  }
   staticFullButtons.appendChild(bouttonsClass);
   staticJobItems.append(staticJobImage, staticJobElements);
   staticJobContainer.append(staticJobItems, staticFullButtons);
