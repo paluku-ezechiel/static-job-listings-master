@@ -1,8 +1,34 @@
 const staticJobContents = document.querySelector(".static-job-contents");
+let activerFilters = [];
 
-let jobArr = [];
 
-const displayJobListing = (listing) => {
+const renderActiveFilters = () => {
+  
+}
+
+const executerLeFiltrage = () => {
+  if (activerFilters.length === 0) {
+    createJobListingElement(jobArr);
+    return;
+  }
+
+  const jobsFilters = jobArr.filter((listing) => {
+    const competencesJob = [
+      listing.role,
+      listing.level,
+      ...(listing.languages || []),
+      ...(listing.tools || []),
+    ];
+
+    return activerFilters.every((unFiltre) =>
+      competencesJob.includes(unFiltre)
+    );
+  });
+  createJobListingElement(jobsFilters);
+  renderActiveFilters();
+};
+
+const createJobListingNodes = (listing) => {
   const staticJobContainer = document.createElement("div");
   staticJobContainer.classList.add("static-job-container");
 
@@ -26,45 +52,8 @@ const displayJobListing = (listing) => {
   photosnap.classList.add("photosnap");
   photosnap.textContent = `${listing.company}`;
 
-  const staticJobText = document.createElement("div");
-  staticJobText.classList.add("static-job-text");
+  staticJobButtons.appendChild(photosnap);
 
-  const jobTexte = document.createElement("p");
-  jobTexte.classList.add("job-text");
-  jobTexte.textContent = `${listing.position}`;
-
-  const staticJobParagraphe = document.createElement("div");
-  staticJobParagraphe.classList.add("static-job-paragraphe");
-
-  const ago = document.createElement("p");
-  ago.textContent = `${listing.postedAt}`;
-
-  const dotParagraphe = document.createElement("p");
-  dotParagraphe.textContent = ".";
-
-  const fullTime = document.createElement("p");
-  fullTime.textContent = `${listing.contract}`;
-
-  const dotParagrapheTwo = document.createElement("p");
-  dotParagrapheTwo.textContent = ".";
-
-  const usaOnly = document.createElement("p");
-  usaOnly.textContent = `${listing.location}`;
-
-  const staticFullButtons = document.createElement("div");
-  staticFullButtons.classList.add("static-full-buttons");
-
-  const bouttonsClass = document.createElement("div");
-  bouttonsClass.classList.add("bouttons-class");
-
-  const btnFrontend = document.createElement("button");
-  btnFrontend.textContent = `${listing.role}`;
-
-  const btnLevel = document.createElement("button");
-  btnLevel.textContent = `${listing.level}`;
-
-  staticJobImage.appendChild(img);
-  staticJobButtons.append(photosnap);
   if (listing.new === true) {
     const paraNew = document.createElement("p");
     paraNew.classList.add("para-new");
@@ -80,53 +69,119 @@ const displayJobListing = (listing) => {
     staticJobButtons.appendChild(parFeature);
   }
 
-  staticJobText.appendChild(jobTexte);
-  staticJobParagraphe.append(
-    ago,
-    dotParagraphe,
-    fullTime,
-    dotParagrapheTwo,
-    usaOnly
-  );
+  const staticJobText = document.createElement("div");
+  staticJobText.classList.add("static-job-text");
 
+  const jobText = document.createElement("p");
+  jobText.classList.add("job-text");
+  jobText.textContent = `${listing.position}`;
+
+  const staticJobParagraphe = document.createElement("div");
+  staticJobParagraphe.classList.add("static-job-paragraphe");
+
+  const ago = document.createElement("p");
+  ago.textContent = `${listing.postedAt}`;
+
+  const dotOne = document.createElement("p");
+  dotOne.textContent = ".";
+
+  const fullTime = document.createElement("p");
+  fullTime.textContent = `${listing.contract}`;
+
+  const dotTwo = document.createElement("p");
+  dotTwo.textContent = ".";
+
+  const usaOnly = document.createElement("p");
+  usaOnly.textContent = `${listing.location}`;
+
+  const staticFullButtons = document.createElement("div");
+  staticFullButtons.classList.add("static-full-buttons");
+
+  const buttonsClass = document.createElement("div");
+  buttonsClass.classList.add("bouttons-class");
+
+  const frontendButton = document.createElement("button");
+  frontendButton.type = "button";
+  frontendButton.textContent = `${listing.role}`;
+
+  frontendButton.addEventListener("click", () => {
+    if (!activerFilters.includes(listing.role)) {
+      activerFilters.push(listing.role);
+      executerLeFiltrage();
+    }
+  });
+
+  const levelButton = document.createElement("button");
+  levelButton.type = "button";
+  levelButton.textContent = `${listing.level}`;
+
+  levelButton.addEventListener("click", () => {
+    if (!activerFilters.includes(listing.level)) {
+      activerFilters.push(listing.level);
+      executerLeFiltrage();
+    }
+  });
+
+  staticJobImage.appendChild(img);
+  staticJobText.appendChild(jobText);
+  staticJobParagraphe.append(ago, dotOne, fullTime, dotTwo, usaOnly);
   staticJobElements.append(
     staticJobButtons,
     staticJobText,
     staticJobParagraphe
   );
-  bouttonsClass.append(btnFrontend, btnLevel);
 
+  buttonsClass.append(frontendButton, levelButton);
   if (listing.languages && listing.languages.length > 0) {
-    listing.languages.forEach((lang) => {
-      const btnLanguage = document.createElement("button");
-      btnLanguage.textContent = `${lang}`;
-      bouttonsClass.appendChild(btnLanguage);
+    listing.languages.forEach((listLanguage) => {
+      const languageButton = document.createElement("button");
+      languageButton.type = "button";
+      languageButton.textContent = `${listLanguage}`;
+      languageButton.addEventListener("click", () => {
+        if (!activerFilters.includes(listLanguage)) {
+          activerFilters.push(listLanguage);
+          executerLeFiltrage();
+        }
+      });
+      buttonsClass.appendChild(languageButton);
     });
   }
 
   if (listing.tools && listing.tools.length > 0) {
-    listing.tools.forEach((tool) => {
-      const btnTool = document.createElement("button");
-      btnTool.textContent = `${tool}`;
-      bouttonsClass.appendChild(btnTool);
+    listing.tools.forEach((listTool) => {
+      const toolButton = document.createElement("button");
+      toolButton.type = "button";
+      toolButton.textContent = `${listTool}`;
+      toolButton.addEventListener("click", () => {
+        if (!activerFilters.includes(listTool)) {
+          activerFilters.push(listTool);
+          executerLeFiltrage();
+        }
+      });
+
+      buttonsClass.appendChild(toolButton);
     });
   }
-  staticFullButtons.appendChild(bouttonsClass);
+
+  staticFullButtons.appendChild(buttonsClass);
   staticJobItems.append(staticJobImage, staticJobElements);
   staticJobContainer.append(staticJobItems, staticFullButtons);
+
   return staticJobContainer;
 };
 
 const createJobListingElement = (jobArr) => {
-  const listingArr = Array.isArray(jobArr) ? jobArr : [jobArr];
-  const texteNodes = listingArr.map((listing) => {
-    return displayJobListing(listing);
+  const jobListing = Array.isArray(jobArr) ? jobArr : [jobArr];
+  const texteNodes = jobListing.map((listing) => {
+    return createJobListingNodes(listing);
   });
 
+  if (!staticJobContents) return;
   staticJobContents.replaceChildren(...texteNodes);
 };
 
-const fetchAllJob = async () => {
+let jobArr = [];
+const fetchAllJobList = async () => {
   try {
     const response = await fetch("./data.json");
     if (!response.ok) {
@@ -135,8 +190,8 @@ const fetchAllJob = async () => {
     jobArr = await response.json();
     createJobListingElement(jobArr);
   } catch (error) {
-    console.log(`Erreur ${error}`);
+    console.log("Erreur : ", error);
   }
 };
 
-fetchAllJob();
+fetchAllJobList();
