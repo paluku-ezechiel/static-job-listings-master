@@ -72,6 +72,11 @@ header {
   border-left: 5px solid var(--Green_400);
 }
 
+.static-job-image {
+  width: 60px;
+  height: 60px;
+}
+
 .static-job-items {
   display: flex;
   align-items: center;
@@ -127,7 +132,15 @@ header {
 
 .bouttons-class {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+}
+
+.divider {
+  border: 1px solid var(--Gray_400);
+  width: 90%;
+  height: 0.1rem;
+  display: none;
 }
 
 .bouttons-class button {
@@ -205,4 +218,44 @@ header {
 
 .hidden {
   display: none;
+}
+
+.static-full-buttons {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+  .static-job-contents {
+    width: 90%;
+    margin: auto;
+    padding-top: 2rem;
+  }
+  .static-job-container {
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .static-job-items {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 95%;
+  }
+
+  .static-job-image {
+    margin-top: -4rem;
+  }
+
+  .static-full-buttons {
+    flex-wrap: wrap;
+  }
+
+  .divider {
+    display: block;
+  }
+
+  .static-job-elements {
+    font-size: 2rem;
+    gap: 2rem;
+  }
 }

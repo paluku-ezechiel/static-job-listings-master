@@ -1,10 +1,53 @@
 const staticJobContents = document.querySelector(".static-job-contents");
+const filterBar = document.querySelector(".filter-bar");
+const container = document.querySelector(".active-filter-container");
 let activerFilters = [];
 
-
 const renderActiveFilters = () => {
-  
-}
+  if (activerFilters.length === 0) {
+    filterBar.classList.add("hidden");
+    return;
+  }
+
+  filterBar.classList.remove("hidden");
+
+  container.innerHTML = "";
+
+  activerFilters.forEach((filtre) => {
+    const activeFilterItem = document.createElement("div");
+    activeFilterItem.classList.add("active-filter-item");
+
+    const p = document.createElement("p");
+    p.textContent = `${filtre}`;
+
+    const btnDelete = document.createElement("button");
+    btnDelete.type = "button";
+    btnDelete.classList.add("btn-delete");
+    btnDelete.setAttribute("aria-label", "Remove filter");
+
+    btnDelete.addEventListener("click", () => {
+      activerFilters = activerFilters.filter((item) => item !== filtre);
+      executerLeFiltrage();
+    });
+
+    const iconFa = document.createElement("i");
+    iconFa.classList.add("fa-solid", "fa-xmark");
+    iconFa.setAttribute("aria-hidden", "true");
+
+    btnDelete.appendChild(iconFa);
+    activeFilterItem.append(p, btnDelete);
+    container.appendChild(activeFilterItem);
+  });
+
+  const btnClear = document.querySelector(".btn-clear");
+
+  if (btnClear) {
+    btnClear.addEventListener("click", () => {
+      activerFilters = [];
+      executerLeFiltrage();
+    });
+  }
+};
 
 const executerLeFiltrage = () => {
   if (activerFilters.length === 0) {
@@ -104,6 +147,9 @@ const createJobListingNodes = (listing) => {
   frontendButton.type = "button";
   frontendButton.textContent = `${listing.role}`;
 
+  const divider = document.createElement("div");
+  divider.classList.add("divider");
+
   frontendButton.addEventListener("click", () => {
     if (!activerFilters.includes(listing.role)) {
       activerFilters.push(listing.role);
@@ -165,7 +211,7 @@ const createJobListingNodes = (listing) => {
 
   staticFullButtons.appendChild(buttonsClass);
   staticJobItems.append(staticJobImage, staticJobElements);
-  staticJobContainer.append(staticJobItems, staticFullButtons);
+  staticJobContainer.append(staticJobItems, divider, staticFullButtons);
 
   return staticJobContainer;
 };
