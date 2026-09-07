@@ -1,7 +1,9 @@
 const staticJobContents = document.querySelector(".static-job-contents");
 const filterBar = document.querySelector(".filter-bar");
 const container = document.querySelector(".active-filter-container");
+const btnClear = document.querySelector(".btn-clear");
 let activerFilters = [];
+let jobArr = [];
 
 const renderActiveFilters = () => {
   if (activerFilters.length === 0) {
@@ -11,9 +13,7 @@ const renderActiveFilters = () => {
 
   filterBar.classList.remove("hidden");
 
-  container.innerHTML = "";
-
-  activerFilters.forEach((filtre) => {
+  const filterNodes = activerFilters.map((filtre) => {
     const activeFilterItem = document.createElement("div");
     activeFilterItem.classList.add("active-filter-item");
 
@@ -23,7 +23,7 @@ const renderActiveFilters = () => {
     const btnDelete = document.createElement("button");
     btnDelete.type = "button";
     btnDelete.classList.add("btn-delete");
-    btnDelete.setAttribute("aria-label", "Remove filter");
+    btnDelete.setAttribute("aria-label", `Remove filter ${filtre}`);
 
     btnDelete.addEventListener("click", () => {
       activerFilters = activerFilters.filter((item) => item !== filtre);
@@ -36,20 +36,15 @@ const renderActiveFilters = () => {
 
     btnDelete.appendChild(iconFa);
     activeFilterItem.append(p, btnDelete);
-    container.appendChild(activeFilterItem);
+    return activeFilterItem;
   });
 
-  const btnClear = document.querySelector(".btn-clear");
-
-  if (btnClear) {
-    btnClear.addEventListener("click", () => {
-      activerFilters = [];
-      executerLeFiltrage();
-    });
-  }
+  container.replaceChildren(...filterNodes);
 };
 
 const executerLeFiltrage = () => {
+  renderActiveFilters();
+
   if (activerFilters.length === 0) {
     createJobListingElement(jobArr);
     return;
@@ -68,8 +63,14 @@ const executerLeFiltrage = () => {
     );
   });
   createJobListingElement(jobsFilters);
-  renderActiveFilters();
 };
+
+if (btnClear) {
+  btnClear.addEventListener("click", () => {
+    activerFilters = [];
+    executerLeFiltrage();
+  });
+}
 
 const createJobListingNodes = (listing) => {
   const staticJobContainer = document.createElement("div");
@@ -143,30 +144,32 @@ const createJobListingNodes = (listing) => {
   const buttonsClass = document.createElement("div");
   buttonsClass.classList.add("bouttons-class");
 
-  const frontendButton = document.createElement("button");
-  frontendButton.type = "button";
-  frontendButton.textContent = `${listing.role}`;
+  const ajouterCritereBouton = (label) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = label;
+
+    btn.addEventListener("click", () => {
+      if (!activerFilters.includes(label)) {
+        activerFilters.push(label);
+        executerLeFiltrage();
+      }
+    });
+
+    buttonsClass.appendChild(btn);
+  };
+  // const frontendButton = document.createElement("button");
+  // frontendButton.type = "button";
+  // frontendButton.textContent = `${listing.role}`;
 
   const divider = document.createElement("div");
   divider.classList.add("divider");
 
-  frontendButton.addEventListener("click", () => {
-    if (!activerFilters.includes(listing.role)) {
-      activerFilters.push(listing.role);
-      executerLeFiltrage();
-    }
-  });
+  ajouterCritereBouton(listing.role);
+  ajouterCritereBouton(listing.level);
 
-  const levelButton = document.createElement("button");
-  levelButton.type = "button";
-  levelButton.textContent = `${listing.level}`;
-
-  levelButton.addEventListener("click", () => {
-    if (!activerFilters.includes(listing.level)) {
-      activerFilters.push(listing.level);
-      executerLeFiltrage();
-    }
-  });
+  if(listing.languages) listing.languages.forEach(ajouterCritereBouton);
+  if(listing.tools) listing.tools.forEach(ajouterCritereBouton)
 
   staticJobImage.appendChild(img);
   staticJobText.appendChild(jobText);
@@ -176,39 +179,7 @@ const createJobListingNodes = (listing) => {
     staticJobText,
     staticJobParagraphe
   );
-
-  buttonsClass.append(frontendButton, levelButton);
-  if (listing.languages && listing.languages.length > 0) {
-    listing.languages.forEach((listLanguage) => {
-      const languageButton = document.createElement("button");
-      languageButton.type = "button";
-      languageButton.textContent = `${listLanguage}`;
-      languageButton.addEventListener("click", () => {
-        if (!activerFilters.includes(listLanguage)) {
-          activerFilters.push(listLanguage);
-          executerLeFiltrage();
-        }
-      });
-      buttonsClass.appendChild(languageButton);
-    });
-  }
-
-  if (listing.tools && listing.tools.length > 0) {
-    listing.tools.forEach((listTool) => {
-      const toolButton = document.createElement("button");
-      toolButton.type = "button";
-      toolButton.textContent = `${listTool}`;
-      toolButton.addEventListener("click", () => {
-        if (!activerFilters.includes(listTool)) {
-          activerFilters.push(listTool);
-          executerLeFiltrage();
-        }
-      });
-
-      buttonsClass.appendChild(toolButton);
-    });
-  }
-
+  
   staticFullButtons.appendChild(buttonsClass);
   staticJobItems.append(staticJobImage, staticJobElements);
   staticJobContainer.append(staticJobItems, divider, staticFullButtons);
@@ -226,7 +197,6 @@ const createJobListingElement = (jobArr) => {
   staticJobContents.replaceChildren(...texteNodes);
 };
 
-let jobArr = [];
 const fetchAllJobList = async () => {
   try {
     const response = await fetch("./data.json");
