@@ -7,6 +7,7 @@ let jobArr = [];
 
 const renderActiveFilters = () => {
   if (activerFilters.length === 0) {
+    container.replaceChildren();
     filterBar.classList.add("hidden");
     return;
   }
@@ -158,9 +159,6 @@ const createJobListingNodes = (listing) => {
 
     buttonsClass.appendChild(btn);
   };
-  // const frontendButton = document.createElement("button");
-  // frontendButton.type = "button";
-  // frontendButton.textContent = `${listing.role}`;
 
   const divider = document.createElement("div");
   divider.classList.add("divider");
@@ -168,8 +166,8 @@ const createJobListingNodes = (listing) => {
   ajouterCritereBouton(listing.role);
   ajouterCritereBouton(listing.level);
 
-  if(listing.languages) listing.languages.forEach(ajouterCritereBouton);
-  if(listing.tools) listing.tools.forEach(ajouterCritereBouton)
+  if (listing.languages) listing.languages.forEach(ajouterCritereBouton);
+  if (listing.tools) listing.tools.forEach(ajouterCritereBouton);
 
   staticJobImage.appendChild(img);
   staticJobText.appendChild(jobText);
@@ -179,7 +177,7 @@ const createJobListingNodes = (listing) => {
     staticJobText,
     staticJobParagraphe
   );
-  
+
   staticFullButtons.appendChild(buttonsClass);
   staticJobItems.append(staticJobImage, staticJobElements);
   staticJobContainer.append(staticJobItems, divider, staticFullButtons);
@@ -205,6 +203,7 @@ const fetchAllJobList = async () => {
     }
     jobArr = await response.json();
     createJobListingElement(jobArr);
+    renderActiveFilters();
   } catch (error) {
     console.log("Erreur : ", error);
   }

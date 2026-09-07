@@ -224,7 +224,7 @@ header {
   max-width: 100%;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   .static-job-contents {
     width: 90%;
     margin: auto;
